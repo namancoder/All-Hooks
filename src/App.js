@@ -2,17 +2,26 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { MovieCard } from "./components/MovieCard/movieCard";
-import { fetchMovies } from "./movieApi/backend";
+import {
+  defaultSearchUrl,
+  fetchMovies,
+  searchKeywordUrl,
+} from "./movieApi/backend";
 import { useQuery } from "react-query";
+import { useDebounce } from "use-debounce";
+
 function App() {
   const [movies, setMovies] = useState([]);
   const [search, setSearch] = useState("");
-  const { data, error, isError, isLoading } = useQuery("movies", fetchMovies);
+  const debouncedSearch = useDebounce(search, 500);
+  const { data, error, isError, isLoading } = useFetchKeywordMovies(
+    debouncedSearch[0]
+  );
 
   useEffect(() => {
     if (isError) console.log(error);
     setMovies(data);
-  }, [data]);
+  }, [data, search]);
   console.log("search", search);
   return (
     <div className='App'>
