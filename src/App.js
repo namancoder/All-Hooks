@@ -1,13 +1,7 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { MovieCard } from "./components/MovieCard/movieCard";
-import {
-  defaultSearchUrl,
-  fetchMovies,
-  searchKeywordUrl,
-} from "./movieApi/backend";
-import { useQuery } from "react-query";
+import { useFetchKeywordMovies } from "./movieApi/backend";
 import { useDebounce } from "use-debounce";
 
 function App() {
